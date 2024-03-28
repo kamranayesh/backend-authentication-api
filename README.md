@@ -10,6 +10,7 @@ json
     "username": "user1",
     "password": "password"
 }
+
 -Login with the registered user:
 Method: POST
 URL: http://localhost:3000/auth/login
