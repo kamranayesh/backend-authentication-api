@@ -1,3 +1,4 @@
+// routes/profileRoutes.js
 const express = require("express");
 const router = express.Router();
 const { isAuthenticated, isAdmin } = require("../middleware/authMiddleware");
@@ -62,14 +63,13 @@ router.put("/profile", isAuthenticated, async (req, res) => {
     const currentUser = req.user;
     const users = getUsers();
 
-    
+    // Find the index of the current user in the users array
     const index = users.findIndex((user) => user.id === currentUser.id);
 
     if (index === -1) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    
     if (req.body.name) {
       users[index].name = req.body.name;
     }
@@ -83,11 +83,10 @@ router.put("/profile", isAuthenticated, async (req, res) => {
       users[index].email = req.body.email;
     }
 
-  
     if (req.body.photo) {
       users[index].photo = req.body.photo;
     }
-   
+
     if (req.body.isPublic !== undefined) {
       users[index].isPublic = req.body.isPublic;
     }
@@ -100,7 +99,6 @@ router.put("/profile", isAuthenticated, async (req, res) => {
 
 router.get("/all", isAuthenticated, isAdmin, (req, res) => {
   try {
-   
     if (!req.user.isAdmin) {
       return res.status(403).json({ message: "Unauthorized" });
     }
