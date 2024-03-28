@@ -1,3 +1,4 @@
+// routes/authRoutes.js
 const express = require("express");
 const passport = require("passport");
 const { User, addUser, getUsers } = require("../models/user");
@@ -23,6 +24,19 @@ router.post(
     failureRedirect: "/auth/loginfail",
     failureFlash: true,
   })
+);
+
+router.get(
+  "/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+router.get(
+  "/google/callback",
+  passport.authenticate("google", { failureRedirect: "/login" }),
+  (req, res) => {
+    res.redirect("/profile");
+  }
 );
 
 router.get("/loginfail", (req, res) => {
